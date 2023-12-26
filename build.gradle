@@ -31,7 +31,7 @@ test {
     useJUnitPlatform()
 
     testLogging {
-        exceptionFormat = TestExceptionFormat.FULL;
+        exceptionFormat = TestExceptionFormat.FULL
         events = [TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED] as Set
         // showStackTraces = true
         // showCauses = true
