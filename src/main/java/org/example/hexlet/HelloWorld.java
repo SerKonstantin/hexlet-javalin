@@ -25,6 +25,10 @@ public class HelloWorld {
            ctx.render("users/index.jte", Collections.singletonMap("page", page));
         });
 
+        app.get("/", ctx -> {
+            ctx.render("index.jte");
+        });
+
         return app;
     }
 
