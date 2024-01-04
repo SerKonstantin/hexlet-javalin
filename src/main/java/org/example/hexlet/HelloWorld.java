@@ -9,16 +9,25 @@ import org.example.hexlet.pseudoDatabases.CoursesList;
 import org.example.hexlet.pseudoDatabases.UsersList;
 
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class HelloWorld {
     public static Javalin getApp() {
         var app = Javalin.create(config -> config.plugins.enableDevLogging());
 
         app.get("/courses", ctx -> {
-            // Usually get from database here
             var courses = new CoursesList().getCourses();
-            var page = new CoursesPage(courses);
-            ctx.render("courses/index.jte", Collections.singletonMap("page", page));
+            var term = ctx.queryParam("term");
+            if (term != null) {
+                var filteredCourses = courses.stream()
+                        .filter(c -> c.getName().toLowerCase().contains(term.toLowerCase()))
+                        .collect(Collectors.toList());
+                var page = new CoursesPage(filteredCourses);
+                ctx.render("courses/index.jte", Collections.singletonMap("page", page));
+            } else {
+                var page = new CoursesPage(courses);
+                ctx.render("courses/index.jte", Collections.singletonMap("page", page));
+            }
         });
 
         app.get("/users", ctx -> {
