@@ -1,7 +1,9 @@
 package org.example.hexlet;
 
 import io.javalin.Javalin;
+import io.javalin.http.NotFoundResponse;
 import org.example.hexlet.dto.CoursesPage;
+import org.example.hexlet.dto.UserPage;
 import org.example.hexlet.dto.UsersPage;
 import org.example.hexlet.pseudoDatabases.CoursesList;
 import org.example.hexlet.pseudoDatabases.UsersList;
@@ -25,20 +27,26 @@ public class HelloWorld {
            ctx.render("users/index.jte", Collections.singletonMap("page", page));
         });
 
+        app.get("/users/{id}", ctx -> {
+            var id = ctx.pathParamAsClass("id", Long.class).get();
+            var users = new UsersList().getUsers();
+            var user = users.stream()
+                    .filter(u -> id.equals(u.getId()))
+                    .findFirst()
+                    .orElse(null);
+            if (user == null) {
+                throw new NotFoundResponse("User not found");
+            }
+            var page =new UserPage(user);
+            ctx.render("users/show.jte", Collections.singletonMap("page", page));
+        });
+
         app.get("/", ctx -> {
             ctx.render("index.jte");
         });
 
         return app;
     }
-
-//    public static Course getCourse(String id) {
-//        var courses = getCoursesList();
-//        return courses.stream()
-//                .filter(course -> course.getId().equals(Long.parseLong(id)))
-//                .findFirst()
-//                .orElse(null);
-//    }
 
     public static void main(String[] args) {
         var app = getApp();

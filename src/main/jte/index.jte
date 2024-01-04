@@ -4,8 +4,8 @@
         <title>PlayWithJTE</title>
     `,
     content = @`
-        <p>Welcome to <b>PlayWithJTE site</b></p>
-        <p>Use menu at the top to navigate</p>
+        <h1>Welcome to PlayWithJTE site</h1>
+    <p><i>Use menu at the top to navigate</i></p>
     `,
     footer = @`
         <p>Homepage footer</p>
