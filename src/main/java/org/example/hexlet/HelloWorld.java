@@ -27,7 +27,7 @@ public class HelloWorld {
             List<Course> courses;
             if (term != null) {
                 courses = COURSES.stream()
-                        .filter(c -> c.getName().toLowerCase().contains(term.toLowerCase()))
+                        .filter(c -> c.getName().toLowerCase().contains(term.trim().toLowerCase()))
                         .collect(Collectors.toList());
             } else {
                 courses = COURSES;
@@ -36,6 +36,8 @@ public class HelloWorld {
             ctx.render("courses/index.jte", Collections.singletonMap("page", page));
         });
 
+        app.get("/courses/build", ctx -> ctx.render("courses/build.jte"));
+
         app.get("/courses/{id}", ctx -> {
             var id = ctx.pathParamAsClass("id", Long.class).get();
             var course = COURSES.stream()
@@ -43,10 +45,19 @@ public class HelloWorld {
                     .findFirst()
                     .orElse(null);
             if (course == null) {
-                throw new NotFoundResponse("User not found");
+                throw new NotFoundResponse("Course not found");
             }
             var page = new CoursePage(course);
             ctx.render("courses/show.jte", Collections.singletonMap("page", page));
+        });
+
+        app.post("/courses", ctx -> {
+            var name = ctx.formParam("name").trim();
+            var description = ctx.formParam("description");
+
+            var course = new Course(name, description);
+            CoursesRepository.save(course);
+            ctx.redirect("/courses");
         });
 
         app.get("/users", ctx -> {

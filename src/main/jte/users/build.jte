@@ -5,20 +5,20 @@
     content = @`
     <div class="d-flex justify-content-center">
         <form action="/users" method="post">
-            <div class="form-group m-2">
-                <label>
+            <div>
+                <label class="form-group m-2">
                     First name
                     <input type="text" class="form-control rounded" required name="firstName">
                 </label>
             </div>
-            <div class="form-group m-2">
-                <label>
+            <div>
+                <label class="form-group m-2">
                     Second name
                     <input type="text" class="form-control rounded" required name="secondName">
                 </label>
             </div>
-            <div class="form-group m-2">
-                <label>
+            <div>
+                <label class="form-group m-2">
                     Email
                     <input type="email" class="form-control rounded" required name="email">
                 </label>
