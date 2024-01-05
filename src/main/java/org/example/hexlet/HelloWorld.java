@@ -70,9 +70,9 @@ public class HelloWorld {
         });
 
         app.post("/users", ctx -> {
-            var firstName = ctx.formParam("firstName");
-            var secondName = ctx.formParam("secondName");
-            var email = ctx.formParam("email");
+            var firstName = ctx.formParam("firstName").trim();
+            var secondName = ctx.formParam("secondName").trim();
+            var email = ctx.formParam("email").trim().toLowerCase();
 
             var user = new User(firstName, secondName, email);
             UsersRepository.save(user);

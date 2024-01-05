@@ -3,7 +3,7 @@
 
 @template.layout.page(
     title = @`
-        <title>${page.getUser().getFirstName()} ${page.getUser().getSecondName()} | PlayWithJTE</title>
+        <title>PlayWithJTE | ${page.getUser().getFirstName()} ${page.getUser().getSecondName()}</title>
     `,
     content =@`
         <h2>${page.getUser().getFirstName()} ${page.getUser().getSecondName()}</h2>

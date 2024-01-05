@@ -3,7 +3,7 @@
 
 @template.layout.page(
     title = @`
-        <title>${page.getCourse().getName()} | PlayWithJTE</title>
+        <title>PlayWithJTE | ${page.getCourse().getName()}</title>
     `,
     content = @`
         <h2>${page.getCourse().getName()}</h2>

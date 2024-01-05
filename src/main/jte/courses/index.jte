@@ -3,10 +3,10 @@
 
 @template.layout.page(
     title = @`
-        <title>Courses | PlayWithJTE</title>
+        <title>PlayWithJTE | Courses</title>
     `,
     content = @`
-    <div class="w-25">
+    <div class="w-50">
         <form class="input-group" action="/courses" method="get">
             <input type="search" class="form-control rounded" placeholder="search" aria-label="Search" aria-describedby="search-addon" required name="term" value="${page.getTerm()}">
             <input type="submit" value="Find" class="btn btn-outline-primary">

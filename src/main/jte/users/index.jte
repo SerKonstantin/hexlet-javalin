@@ -3,10 +3,10 @@
 
 @template.layout.page(
     title = @`
-        <title>Users | PlayWithJTE</title>
+        <title>PlayWithJTE | Users</title>
     `,
     content = @`
-            <a href="/users/build" class="btn btn-outline-primary">Create user</a>
+            <a href="/users/build" class="btn btn-outline-primary mb-2">Create user</a>
         @if (page.getUsers().isEmpty())
             <p>Users not found</p>
         @else
