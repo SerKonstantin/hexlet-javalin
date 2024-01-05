@@ -9,7 +9,7 @@ import org.example.hexlet.dto.users.UsersPage;
 import org.example.hexlet.model.Course;
 import org.example.hexlet.model.User;
 import org.example.hexlet.pseudoDatabases.CoursesList;
-import org.example.hexlet.pseudoDatabases.UsersList;
+import org.example.hexlet.pseudoDatabases.users.UsersRepository;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class HelloWorld {
     private static final List<Course> COURSES = new CoursesList().getCourses();
-    public static final List<User> USERS = new UsersList().getUsers();
+    public static final List<User> USERS = UsersRepository.populate().getUsers();
 
     public static Javalin getApp() {
         var app = Javalin.create(config -> config.plugins.enableDevLogging());
@@ -67,9 +67,7 @@ public class HelloWorld {
             ctx.render("users/show.jte", Collections.singletonMap("page", page));
         });
 
-        app.get("/", ctx -> {
-            ctx.render("index.jte");
-        });
+        app.get("/", ctx -> ctx.render("index.jte"));
 
         return app;
     }

@@ -11,9 +11,11 @@
         @else
             <table class="table">
                 <thead>
-                <td>ID</td>
-                <td>Full name</td>
-                <td>Email</td>
+                    <tr>
+                        <td>ID</td>
+                        <td>Full name</td>
+                        <td>Email</td>
+                    </tr>
                 </thead>
                 @for(var user : page.getUsers())
                     <tr>

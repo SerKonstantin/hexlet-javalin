@@ -22,7 +22,7 @@
         <ul class="list">
             @for(var course : page.getCourses())
             <li>
-                <a href="/courses/${course.getId()}"}>${course.getName()}</a>
+                <a href="/courses/${course.getId()}">${course.getName()}</a>
             </li>
             @endfor
         </ul>
