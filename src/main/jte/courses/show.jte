@@ -1,4 +1,4 @@
-@import org.example.hexlet.dto.CoursePage
+@import org.example.hexlet.dto.courses.CoursePage
 @param CoursePage page
 
 @template.layout.page(
@@ -10,4 +10,4 @@
         <p>${page.getCourse().getDescription()}</p>
     `
 )
-## No footer here just for test
+<!-- No footer here just for test -->

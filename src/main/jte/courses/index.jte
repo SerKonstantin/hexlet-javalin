@@ -1,4 +1,4 @@
-@import org.example.hexlet.dto.CoursesPage
+@import org.example.hexlet.dto.courses.CoursesPage
 @param CoursesPage page
 
 @template.layout.page(
@@ -6,12 +6,13 @@
         <title>Courses | PlayWithJTE</title>
     `,
     content = @`
-    <form action="/courses" method="get">
-        <p>Search course:</p>
-        <input type="search" required name="term">
-        <input type="submit" value="Find" class="btn btn-light">
-        <a href="/courses" class="btn btn-light">Show all</a>
-    </form>
+    <div class="w-25">
+        <form class="input-group" action="/courses" method="get">
+            <input type="search" class="form-control rounded" placeholder="search" aria-label="Search" aria-describedby="search-addon" required name="term" value="${page.getTerm()}">
+            <input type="submit" value="Find" class="btn btn-outline-primary">
+            <a href="/courses" class="btn btn-outline-primary">Show all</a>
+        </form>
+    </div>
 
     <hr>
     @if (page.getCourses().isEmpty())

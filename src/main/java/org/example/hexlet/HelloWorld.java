@@ -2,10 +2,10 @@ package org.example.hexlet;
 
 import io.javalin.Javalin;
 import io.javalin.http.NotFoundResponse;
-import org.example.hexlet.dto.CoursePage;
-import org.example.hexlet.dto.CoursesPage;
-import org.example.hexlet.dto.UserPage;
-import org.example.hexlet.dto.UsersPage;
+import org.example.hexlet.dto.courses.CoursePage;
+import org.example.hexlet.dto.courses.CoursesPage;
+import org.example.hexlet.dto.users.UserPage;
+import org.example.hexlet.dto.users.UsersPage;
 import org.example.hexlet.model.Course;
 import org.example.hexlet.model.User;
 import org.example.hexlet.pseudoDatabases.CoursesList;
@@ -24,16 +24,16 @@ public class HelloWorld {
 
         app.get("/courses", ctx -> {
             var term = ctx.queryParam("term");
+            List<Course> courses;
             if (term != null) {
-                var filteredCourses = COURSES.stream()
+                courses = COURSES.stream()
                         .filter(c -> c.getName().toLowerCase().contains(term.toLowerCase()))
                         .collect(Collectors.toList());
-                var page = new CoursesPage(filteredCourses);
-                ctx.render("courses/index.jte", Collections.singletonMap("page", page));
             } else {
-                var page = new CoursesPage(COURSES);
-                ctx.render("courses/index.jte", Collections.singletonMap("page", page));
+                courses = COURSES;
             }
+            var page = new CoursesPage(courses, term);
+            ctx.render("courses/index.jte", Collections.singletonMap("page", page));
         });
 
         app.get("/courses/{id}", ctx -> {
