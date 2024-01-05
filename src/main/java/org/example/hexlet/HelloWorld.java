@@ -54,6 +54,8 @@ public class HelloWorld {
            ctx.render("users/index.jte", Collections.singletonMap("page", page));
         });
 
+        app.get("/users/build", ctx -> ctx.render("users/build.jte"));
+
         app.get("/users/{id}", ctx -> {
             var id = ctx.pathParamAsClass("id", Long.class).get();
             var user = USERS.stream()
@@ -65,6 +67,16 @@ public class HelloWorld {
             }
             var page =new UserPage(user);
             ctx.render("users/show.jte", Collections.singletonMap("page", page));
+        });
+
+        app.post("/users", ctx -> {
+            var firstName = ctx.formParam("firstName");
+            var secondName = ctx.formParam("secondName");
+            var email = ctx.formParam("email");
+
+            var user = new User(firstName, secondName, email);
+            UsersRepository.save(user);
+            ctx.redirect("/users");
         });
 
         app.get("/", ctx -> ctx.render("index.jte"));

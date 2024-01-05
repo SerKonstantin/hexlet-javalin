@@ -6,6 +6,7 @@
         <title>Users | PlayWithJTE</title>
     `,
     content = @`
+            <a href="/users/build" class="btn btn-outline-primary">Create user</a>
         @if (page.getUsers().isEmpty())
             <p>Users not found</p>
         @else
