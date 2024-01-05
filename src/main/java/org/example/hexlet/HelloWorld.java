@@ -8,7 +8,7 @@ import org.example.hexlet.dto.users.UserPage;
 import org.example.hexlet.dto.users.UsersPage;
 import org.example.hexlet.model.Course;
 import org.example.hexlet.model.User;
-import org.example.hexlet.pseudoDatabases.CoursesList;
+import org.example.hexlet.pseudoDatabases.courses.CoursesRepository;
 import org.example.hexlet.pseudoDatabases.users.UsersRepository;
 
 import java.util.Collections;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HelloWorld {
-    private static final List<Course> COURSES = new CoursesList().getCourses();
+    private static final List<Course> COURSES = CoursesRepository.populate().getCourses();
     public static final List<User> USERS = UsersRepository.populate().getUsers();
 
     public static Javalin getApp() {
