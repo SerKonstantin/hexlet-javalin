@@ -2,8 +2,11 @@ package org.example.hexlet;
 
 import io.javalin.Javalin;
 import io.javalin.http.NotFoundResponse;
+import io.javalin.validation.ValidationException;
+import org.example.hexlet.dto.courses.BuildCoursePage;
 import org.example.hexlet.dto.courses.CoursePage;
 import org.example.hexlet.dto.courses.CoursesPage;
+import org.example.hexlet.dto.users.BuildUserPage;
 import org.example.hexlet.dto.users.UserPage;
 import org.example.hexlet.dto.users.UsersPage;
 import org.example.hexlet.model.Course;
@@ -36,7 +39,10 @@ public class HelloWorld {
             ctx.render("courses/index.jte", Collections.singletonMap("page", page));
         });
 
-        app.get("/courses/build", ctx -> ctx.render("courses/build.jte"));
+        app.get("/courses/build", ctx -> {
+            var page = new BuildCoursePage();
+            ctx.render("courses/build.jte", Collections.singletonMap("page", page));
+        });
 
         app.get("/courses/{id}", ctx -> {
             var id = ctx.pathParamAsClass("id", Long.class).get();
@@ -53,11 +59,18 @@ public class HelloWorld {
 
         app.post("/courses", ctx -> {
             var name = ctx.formParam("name").trim();
-            var description = ctx.formParam("description");
 
-            var course = new Course(name, description);
-            CoursesRepository.save(course);
-            ctx.redirect("/courses");
+            try {
+                var description = ctx.formParamAsClass("description", String.class)
+                        .check(value -> value.length() >= 8, "Description is too short)")
+                        .get();
+                var course = new Course(name, description);
+                CoursesRepository.save(course);
+                ctx.redirect("/courses");
+            } catch (ValidationException e) {
+                var page = new BuildCoursePage(name, e.getErrors());
+                ctx.render("courses/build.jte", Collections.singletonMap("page", page));
+            }
         });
 
         app.get("/users", ctx -> {
@@ -65,7 +78,10 @@ public class HelloWorld {
            ctx.render("users/index.jte", Collections.singletonMap("page", page));
         });
 
-        app.get("/users/build", ctx -> ctx.render("users/build.jte"));
+        app.get("/users/build", ctx -> {
+            var page = new BuildUserPage();
+            ctx.render("users/build.jte", Collections.singletonMap("page", page));
+        });
 
         app.get("/users/{id}", ctx -> {
             var id = ctx.pathParamAsClass("id", Long.class).get();
@@ -85,9 +101,19 @@ public class HelloWorld {
             var secondName = ctx.formParam("secondName").trim();
             var email = ctx.formParam("email").trim().toLowerCase();
 
-            var user = new User(firstName, secondName, email);
-            UsersRepository.save(user);
-            ctx.redirect("/users");
+            try {
+                var passwordConfirmation = ctx.formParam("passwordConfirmation");
+                var password = ctx.formParamAsClass("password", String.class)
+                        .check(value -> value.equals(passwordConfirmation), "Password doesn't match")
+                        .check(value -> value.length() >= 6, "Please make password at least 6 characters long")
+                        .get();
+                var user = new User(firstName, secondName, email, password);
+                UsersRepository.save(user);
+                ctx.redirect("/users");
+            } catch (ValidationException e) {
+                var page = new BuildUserPage(firstName, secondName, email, e.getErrors());
+                ctx.render("users/build.jte", Collections.singletonMap("page", page));
+            }
         });
 
         app.get("/", ctx -> ctx.render("index.jte"));
