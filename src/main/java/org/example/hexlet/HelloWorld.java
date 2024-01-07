@@ -69,7 +69,7 @@ public class HelloWorld {
                 ctx.redirect("/courses");
             } catch (ValidationException e) {
                 var page = new BuildCoursePage(name, e.getErrors());
-                ctx.render("courses/build.jte", Collections.singletonMap("page", page));
+                ctx.render("courses/build.jte", Collections.singletonMap("page", page)).status(422);
             }
         });
 
@@ -112,7 +112,7 @@ public class HelloWorld {
                 ctx.redirect("/users");
             } catch (ValidationException e) {
                 var page = new BuildUserPage(firstName, secondName, email, e.getErrors());
-                ctx.render("users/build.jte", Collections.singletonMap("page", page));
+                ctx.render("users/build.jte", Collections.singletonMap("page", page)).status(422);
             }
         });
 
