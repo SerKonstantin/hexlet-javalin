@@ -7,9 +7,7 @@ public class NamedRoutes {
         return "/courses";
     }
 
-    public static String buildCoursesPath() {
-        return "/courses/build";
-    }
+    public static String buildCoursesPath() { return "/courses/build"; }
 
     public static String coursePath(String id) {
         return "/courses/" + id;
