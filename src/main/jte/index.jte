@@ -1,3 +1,4 @@
+@import org.example.hexlet.util.NamedRoutes
 
 @template.layout.page(
     title = @`
@@ -9,6 +10,7 @@
     `,
     footer = @`
         <p>Homepage footer</p>
-        <p>Visit my <a href="https://github.com/SerKonstantin">GitHub</a></p>
+        <p>Visit my <a href="${NamedRoutes.footerGithubPath()}">GitHub</a></p>
     `
 )
+

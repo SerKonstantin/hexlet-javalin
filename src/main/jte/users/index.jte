@@ -1,4 +1,5 @@
 @import org.example.hexlet.dto.users.UsersPage
+@import org.example.hexlet.util.NamedRoutes
 @param UsersPage page
 
 @template.layout.page(
@@ -6,7 +7,7 @@
         <title>PlayWithJTE | Users</title>
     `,
     content = @`
-            <a href="/users/build" class="btn btn-outline-primary mb-3">Create user</a>
+            <a href="${NamedRoutes.buildUsersPath()}" class="btn btn-outline-primary mb-3">Create user</a>
         @if (page.getUsers().isEmpty())
             <p>Users not found</p>
         @else
@@ -23,7 +24,7 @@
                     <tr>
                         <td>${user.getId()}</td>
                         <td>
-                            <a href="/users/${user.getId()}">${user.getFirstName()} ${user.getSecondName()}</a>
+                            <a href="${NamedRoutes.userPath(user.getId())}">${user.getFirstName()} ${user.getSecondName()}</a>
                         </td>
                         <td>${user.getEmail()}</td>
                     </tr>
@@ -33,6 +34,6 @@
     `,
     footer = @`
         <p>Users footer</p>
-        <p>Visit my <a href="https://github.com/SerKonstantin">GitHub</a></p>
+        <p>Visit my <a href="${NamedRoutes.footerGithubPath()}">GitHub</a></p>
     `
 )

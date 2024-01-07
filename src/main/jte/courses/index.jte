@@ -1,4 +1,5 @@
 @import org.example.hexlet.dto.courses.CoursesPage
+@import org.example.hexlet.util.NamedRoutes
 @param CoursesPage page
 
 @template.layout.page(
@@ -7,11 +8,11 @@
     `,
     content = @`
     <div class="w-50 mb-3">
-        <form class="input-group" action="/courses" method="get">
+        <form class="input-group" action="${NamedRoutes.coursesPath()}" method="get">
             <input type="search" class="form-control rounded" placeholder="search" aria-label="Search" aria-describedby="search-addon" required name="term" value="${page.getTerm()}">
             <input type="submit" value="Find" class="btn btn-outline-primary">
-            <a href="/courses" class="btn btn-outline-primary">Show all</a>
-            <a href="/courses/build" class="btn btn-outline-primary">Add course</a>
+            <a href="${NamedRoutes.coursesPath()}" class="btn btn-outline-primary">Show all</a>
+            <a href="${NamedRoutes.buildCoursesPath()}" class="btn btn-outline-primary">Add course</a>
         </form>
     </div>
     @if (page.getCourses().isEmpty())
@@ -29,7 +30,7 @@
     `,
     footer = @`
         <p>Courses footer</p>
-        <p>Visit my <a href="https://github.com/SerKonstantin">GitHub</a></p>
+        <p>Visit my <a href="${NamedRoutes.footerGithubPath()}">GitHub</a></p>
     `
 )
 

@@ -1,4 +1,5 @@
 @import org.example.hexlet.dto.users.UserPage
+@import org.example.hexlet.util.NamedRoutes
 @param UserPage page
 
 @template.layout.page(
@@ -11,6 +12,6 @@
     `,
         footer = @`
         <p>Concrete user page footer</p>
-        <p>Visit my <a href="https://github.com/SerKonstantin">GitHub</a></p>
+        <p>Visit my <a href="${NamedRoutes.footerGithubPath()}">GitHub</a></p>
     `
 )

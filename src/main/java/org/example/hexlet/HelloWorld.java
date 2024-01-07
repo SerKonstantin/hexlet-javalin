@@ -13,6 +13,7 @@ import org.example.hexlet.model.Course;
 import org.example.hexlet.model.User;
 import org.example.hexlet.pseudoDatabases.courses.CoursesRepository;
 import org.example.hexlet.pseudoDatabases.users.UsersRepository;
+import org.example.hexlet.util.NamedRoutes;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +26,7 @@ public class HelloWorld {
     public static Javalin getApp() {
         var app = Javalin.create(config -> config.plugins.enableDevLogging());
 
-        app.get("/courses", ctx -> {
+        app.get(NamedRoutes.coursesPath(), ctx -> {
             var term = ctx.queryParam("term");
             List<Course> courses;
             if (term != null) {
@@ -39,12 +40,12 @@ public class HelloWorld {
             ctx.render("courses/index.jte", Collections.singletonMap("page", page));
         });
 
-        app.get("/courses/build", ctx -> {
+        app.get(NamedRoutes.buildCoursesPath(), ctx -> {
             var page = new BuildCoursePage();
             ctx.render("courses/build.jte", Collections.singletonMap("page", page));
         });
 
-        app.get("/courses/{id}", ctx -> {
+        app.get(NamedRoutes.coursePath("{id}"), ctx -> {
             var id = ctx.pathParamAsClass("id", Long.class).get();
             var course = COURSES.stream()
                     .filter(c -> id.equals(c.getId()))
@@ -57,7 +58,7 @@ public class HelloWorld {
             ctx.render("courses/show.jte", Collections.singletonMap("page", page));
         });
 
-        app.post("/courses", ctx -> {
+        app.post(NamedRoutes.coursesPath(), ctx -> {
             var name = ctx.formParam("name").trim();
 
             try {
@@ -66,24 +67,24 @@ public class HelloWorld {
                         .get();
                 var course = new Course(name, description);
                 CoursesRepository.save(course);
-                ctx.redirect("/courses");
+                ctx.redirect(NamedRoutes.coursesPath());
             } catch (ValidationException e) {
                 var page = new BuildCoursePage(name, e.getErrors());
                 ctx.render("courses/build.jte", Collections.singletonMap("page", page)).status(422);
             }
         });
 
-        app.get("/users", ctx -> {
+        app.get(NamedRoutes.usersPath(), ctx -> {
            var page = new UsersPage(USERS);
            ctx.render("users/index.jte", Collections.singletonMap("page", page));
         });
 
-        app.get("/users/build", ctx -> {
+        app.get(NamedRoutes.buildUsersPath(), ctx -> {
             var page = new BuildUserPage();
             ctx.render("users/build.jte", Collections.singletonMap("page", page));
         });
 
-        app.get("/users/{id}", ctx -> {
+        app.get(NamedRoutes.userPath("{id}"), ctx -> {
             var id = ctx.pathParamAsClass("id", Long.class).get();
             var user = USERS.stream()
                     .filter(u -> id.equals(u.getId()))
@@ -96,7 +97,7 @@ public class HelloWorld {
             ctx.render("users/show.jte", Collections.singletonMap("page", page));
         });
 
-        app.post("/users", ctx -> {
+        app.post(NamedRoutes.usersPath(), ctx -> {
             var firstName = ctx.formParam("firstName").trim();
             var secondName = ctx.formParam("secondName").trim();
             var email = ctx.formParam("email").trim().toLowerCase();
@@ -109,14 +110,14 @@ public class HelloWorld {
                         .get();
                 var user = new User(firstName, secondName, email, password);
                 UsersRepository.save(user);
-                ctx.redirect("/users");
+                ctx.redirect(NamedRoutes.usersPath());
             } catch (ValidationException e) {
                 var page = new BuildUserPage(firstName, secondName, email, e.getErrors());
                 ctx.render("users/build.jte", Collections.singletonMap("page", page)).status(422);
             }
         });
 
-        app.get("/", ctx -> ctx.render("index.jte"));
+        app.get(NamedRoutes.homepagePath(), ctx -> ctx.render("index.jte"));
 
         return app;
     }

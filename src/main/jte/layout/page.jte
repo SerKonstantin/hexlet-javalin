@@ -1,4 +1,5 @@
 @import gg.jte.Content
+@import org.example.hexlet.util.NamedRoutes
 
 @param Content title
 @param Content content
@@ -16,13 +17,13 @@
     <header>
         <ul class="nav nav-pills border-bottom mb-4">
             <li class="nav-item">
-                <a class="nav-link" href="/" >Home</a>
+                <a class="nav-link" href="${NamedRoutes.homepagePath()}" >Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/users">Users</a>
+                <a class="nav-link" href="${NamedRoutes.usersPath()}">Users</a>
             </li>
             <li>
-                <a class="nav-link" href="/courses">Courses</a>
+                <a class="nav-link" href="${NamedRoutes.coursesPath()}">Courses</a>
             </li>
         </ul>
     </header>
