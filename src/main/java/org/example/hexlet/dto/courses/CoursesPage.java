@@ -11,4 +11,6 @@ import java.util.List;
 public class CoursesPage {
     private List<Course> courses;
     private String term;
+    private int pagesCount;
+    private int page;
 }

@@ -15,16 +15,25 @@ import java.util.List;
 
 public class CoursesController {
     public static void index(Context ctx) {
+        // Search functionality
         var term = ctx.queryParam("term");
         List<Course> courses;
-
         if (term != null) {
             courses = CoursesRepository.search(term);
         } else {
             courses = CoursesRepository.getCourses();
         }
 
-        var page = new CoursesPage(courses, term);
+        // Pagination
+        int perPage = 10;
+        var currentPage =ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
+        var pagesCount = (int) Math.ceil((double) courses.size() / perPage);
+
+        var startIndex = (currentPage - 1) * perPage;
+        var endIndex = Math.min(startIndex + perPage, courses.size());
+        var paginatedCourses = courses.subList(startIndex, endIndex);
+
+        var page = new CoursesPage(paginatedCourses, term, pagesCount, currentPage);
         ctx.render("courses/index.jte", Collections.singletonMap("page", page));
     }
 

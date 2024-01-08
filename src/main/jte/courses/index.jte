@@ -15,6 +15,7 @@
             <a href="${NamedRoutes.buildCoursesPath()}" class="btn btn-outline-primary">Add course</a>
         </form>
     </div>
+
     @if (page.getCourses().isEmpty())
         <p>Courses not found</p>
     @else
@@ -27,6 +28,56 @@
             @endfor
         </div>
     @endif
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link"href="${NamedRoutes.coursesPath()}?page=${page.getPage() < 2 ? 1 : page.getPage() - 1}">Previous</a>
+            </li>
+
+            @if(page.getPagesCount() <= 5)
+                @for(var i = 1; i <= page.getPagesCount(); i++)
+                    <li class="page-item @if(page.getPage() == i) active @endif">
+                        <a class="page-link" href="${NamedRoutes.coursesPath()}?page=${i}">${i}</a>
+                    </li>
+                @endfor
+            @else
+                @if(page.getPage() > 2)
+                    <li class="page-item">
+                        <a class="page-link" href="${NamedRoutes.coursesPath()}?page=1">1</a>
+                    </li>
+                    @if(page.getPage() > 3)
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">...</a>
+                        </li>
+                    @endif
+                @endif
+
+                @for(var i = page.getPage() - 2; i <= page.getPage() + 2; i++)
+                    @if(i > 0 && i <= page.getPagesCount())
+                        <li class="page-item @if(page.getPage() == i) active @endif">
+                            <a class="page-link" href="${NamedRoutes.coursesPath()}?page=${i}">${i}</a>
+                        </li>
+                    @endif
+                @endfor
+
+                @if(page.getPage() < page.getPagesCount() - 2)
+                    @if(page.getPage() < page.getPagesCount() - 3)
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">...</a>
+                        </li>
+                    @endif
+                    <li class="page-item">
+                        <a class="page-link" href="${NamedRoutes.coursesPath()}?page=${page.getPagesCount()}">${page.getPagesCount()}</a>
+                    </li>
+                @endif
+            @endif
+
+            <li class="page-item">
+                <a class="page-link" href="${NamedRoutes.coursesPath()}?page=${page.getPage() >= page.getPagesCount() ? page.getPagesCount() : page.getPage() + 1}">Next</a>
+            </li>
+        </ul>
+    </nav>
     `,
     footer = @`
         <p>Courses footer</p>
