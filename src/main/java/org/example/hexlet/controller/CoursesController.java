@@ -60,7 +60,8 @@ public class CoursesController {
             CoursesRepository.save(course);
             ctx.redirect(NamedRoutes.coursesPath());
         } catch (ValidationException e) {
-            var page = new BuildCoursePage(name, e.getErrors());
+            var description = ctx.formParam("description");
+            var page = new BuildCoursePage(name, description, e.getErrors());
             ctx.render("courses/build.jte", Collections.singletonMap("page", page)).status(422);
         }
     }
