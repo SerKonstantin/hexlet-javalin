@@ -12,8 +12,8 @@ public class HelloWorld {
         var app = Javalin.create(config -> config.plugins.enableDevLogging());
 
         // Imitate existing DB
-        CoursesRepository.populate();
-        UsersRepository.populate();
+        CoursesRepository.populate(64);
+        UsersRepository.populate(64);
 
         app.get(NamedRoutes.homepagePath(), ctx -> ctx.render("index.jte"));
 

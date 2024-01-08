@@ -1,6 +1,7 @@
 package org.example.hexlet.pseudoDatabases.courses;
 
 import org.example.hexlet.model.Course;
+import org.example.hexlet.util.DataGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,11 @@ public class CoursesRepository {
     private CoursesRepository() {}
 
     // Utility method to prefill DB
-    public static CoursesRepository populate() {
-        GenerateCourses.generate();
-        return new CoursesRepository();
+    public static void populate(int count) {
+        var courses = DataGenerator.getCourses(count);
+        for (var course : courses) {
+            save(course);
+        }
     }
 
     public static void save(Course course) {

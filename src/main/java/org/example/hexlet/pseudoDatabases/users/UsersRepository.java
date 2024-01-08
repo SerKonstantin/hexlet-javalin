@@ -1,6 +1,7 @@
 package org.example.hexlet.pseudoDatabases.users;
 
 import org.example.hexlet.model.User;
+import org.example.hexlet.util.DataGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,11 @@ public class UsersRepository {
     private UsersRepository() {}
 
     // Utility method to prefill DB
-    public static UsersRepository populate() {
-        GenerateUsers.generate();
-        return new UsersRepository();
+    public static void populate(int count) {
+        var users = DataGenerator.getUsers(count);
+        for (var user : users) {
+            save(user);
+        }
     }
 
     public static void save(User user) {
