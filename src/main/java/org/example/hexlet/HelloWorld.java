@@ -3,9 +3,12 @@ package org.example.hexlet;
 import io.javalin.Javalin;
 import org.example.hexlet.controller.CoursesController;
 import org.example.hexlet.controller.UsersController;
+import org.example.hexlet.dto.MainPage;
 import org.example.hexlet.pseudoDatabases.courses.CoursesRepository;
 import org.example.hexlet.pseudoDatabases.users.UsersRepository;
 import org.example.hexlet.util.NamedRoutes;
+
+import java.util.Collections;
 
 public class HelloWorld {
     public static Javalin getApp() {
@@ -15,7 +18,12 @@ public class HelloWorld {
         CoursesRepository.populate(64);
         UsersRepository.populate(64);
 
-        app.get(NamedRoutes.homepagePath(), ctx -> ctx.render("index.jte"));
+        app.get(NamedRoutes.homepagePath(), ctx -> {
+            var visited = Boolean.valueOf(ctx.cookie("visited"));
+            var page = new MainPage(visited);
+            ctx.render("index.jte", Collections.singletonMap("page", page));
+            ctx.cookie("visited", String.valueOf(true));
+        });
 
         app.get(NamedRoutes.coursesPath(), CoursesController::index);
         app.get(NamedRoutes.buildCoursesPath(), CoursesController::build);
