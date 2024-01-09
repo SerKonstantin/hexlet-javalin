@@ -11,7 +11,7 @@
         <p>Email: ${page.getUser().getEmail()}</p>
     `,
         footer = @`
-        <p>Concrete user page footer</p>
+        <p>User page footer</p>
         <p>Visit my <a href="${NamedRoutes.footerGithubPath()}">GitHub</a></p>
     `
 )

@@ -1,23 +1,24 @@
-@import org.example.hexlet.dto.courses.BuildCoursePage
+@import org.example.hexlet.dto.courses.EditCoursePage
 @import org.example.hexlet.util.NamedRoutes
-@param BuildCoursePage page
+@param EditCoursePage page
 
 @template.layout.page(
     title = @`
-        <title>PlayWithJTE | New course</title>
+    <title>PlayWithJTE | Edit course</title>
     `,
+
     content = @`
     @if(page.getErrors() != null)
         <ul class="list-unstyled">
             @for(var validator : page.getErrors().values())
                 @for(var error : validator)
                     <li class="text-danger text-center">${error.getMessage()}</li>
-                @endfor                
+                @endfor
             @endfor
         </ul>
     @endif
 
-    <form class="text-center" action="${NamedRoutes.coursesPath()}" method="post">
+    <form class="text-center" action="${NamedRoutes.coursePath(page.getId())}" method="post">
         <div>
             <label class="form-group m-2 w-25 text-start">
                 Course name
@@ -30,9 +31,7 @@
                 <textarea class="form-control rounded" required name="description" rows="5">${page.getDescription()}</textarea>
             </label>
         </div>
-        <input type="submit" class="btn btn-outline-primary m-2" value="Add course">
+        <input type="submit" class="btn btn-outline-primary m-2" value="Save changes">
     </form>
     `
 )
-
-<!-- No footer here just for test -->

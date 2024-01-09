@@ -21,6 +21,8 @@ public class HelloWorld {
         app.get(NamedRoutes.buildCoursesPath(), CoursesController::build);
         app.get(NamedRoutes.coursePath("{id}"), CoursesController::show);
         app.post(NamedRoutes.coursesPath(), CoursesController::create);
+        app.get(NamedRoutes.editCoursePath("{id}"), CoursesController::edit);
+        app.post(NamedRoutes.coursePath("{id}"), CoursesController::update);
 
         app.get(NamedRoutes.usersPath(), UsersController::index);
         app.get(NamedRoutes.buildUsersPath(), UsersController::build);

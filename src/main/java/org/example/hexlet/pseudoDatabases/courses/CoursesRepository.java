@@ -5,6 +5,7 @@ import org.example.hexlet.util.DataGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 // Imitate DB for instances of Course class
@@ -23,8 +24,10 @@ public class CoursesRepository {
     }
 
     public static void save(Course course) {
-        course.setId((long) courses.size() + 1);
-        courses.add(course);
+        if (course.getId() == null) {
+            course.setId((long) courses.size() + 1);
+            courses.add(course);
+        }
     }
 
     public static List<Course> search(String term) {
@@ -33,11 +36,10 @@ public class CoursesRepository {
                 .collect(Collectors.toList());
     }
 
-    public static Course findById(Long id) {
+    public static Optional<Course> findById(Long id) {
         return courses.stream()
                 .filter(c -> c.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
     public static List<Course> getCourses() { return courses; }

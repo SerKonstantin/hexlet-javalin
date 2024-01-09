@@ -28,10 +28,8 @@ public class UsersController {
         try {
             var id = ctx.pathParamAsClass("id", Long.class).get();
 
-            var user = UsersRepository.findById(id);
-            if (user == null) {
-                throw new NotFoundResponse("User not found");
-            }
+            var user = UsersRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundResponse("User not found"));
 
             var page =new UserPage(user);
             ctx.render("users/show.jte", Collections.singletonMap("page", page));

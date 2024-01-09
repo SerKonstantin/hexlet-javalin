@@ -6,12 +6,15 @@ import io.javalin.validation.ValidationException;
 import org.example.hexlet.dto.courses.BuildCoursePage;
 import org.example.hexlet.dto.courses.CoursePage;
 import org.example.hexlet.dto.courses.CoursesPage;
+import org.example.hexlet.dto.courses.EditCoursePage;
 import org.example.hexlet.model.Course;
 import org.example.hexlet.pseudoDatabases.courses.CoursesRepository;
 import org.example.hexlet.util.NamedRoutes;
 
 import java.util.Collections;
 import java.util.List;
+
+import static org.example.hexlet.pseudoDatabases.courses.CoursesRepository.findById;
 
 public class CoursesController {
     public static void index(Context ctx) {
@@ -46,15 +49,13 @@ public class CoursesController {
         try {
             var id = ctx.pathParamAsClass("id", Long.class).get();
 
-            var course = CoursesRepository.findById(id);
-            if (course == null) {
-                throw new NotFoundResponse("Course not found");
-            }
+            var course = findById(id)
+                    .orElseThrow(() -> new NotFoundResponse("Course not found"));
 
             var page = new CoursePage(course);
             ctx.render("courses/show.jte", Collections.singletonMap("page", page));
         } catch (ValidationException e) {
-            ctx.status(404).result("Page not found");
+            throw new NotFoundResponse("Page not found");
         }
     }
 
@@ -72,6 +73,50 @@ public class CoursesController {
             var description = ctx.formParam("description");
             var page = new BuildCoursePage(name, description, e.getErrors());
             ctx.render("courses/build.jte", Collections.singletonMap("page", page)).status(422);
+        }
+    }
+
+    public static void edit(Context ctx) {
+        try {
+            var id = ctx.pathParamAsClass("id", Long.class).get();
+            var course = CoursesRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundResponse("Course not found"));
+
+            var name = course.getName();
+            var description = course.getDescription();
+            var page = new EditCoursePage(id, name, description, null);
+            ctx.render("courses/edit.jte", Collections.singletonMap("page", page));
+        } catch (ValidationException e) {
+            throw new NotFoundResponse("Page not found");
+        }
+    }
+
+    public static void update(Context ctx) {
+        try {
+            var id = ctx.pathParamAsClass("id", Long.class).get();
+            var course = CoursesRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundResponse("Course not found"));
+
+            var name = ctx.formParam("name").trim();
+
+            try {
+                var description = ctx.formParamAsClass("description", String.class)
+                        .check(value -> value.length() >= 8, "Description is too short")
+                        .get();
+
+                course.setName(name);
+                course.setDescription(description);
+
+                ctx.redirect(NamedRoutes.coursesPath());
+
+            } catch (ValidationException e) {
+                var description = ctx.formParam("description");
+                var page = new EditCoursePage(id, name, description, e.getErrors());
+                ctx.render("courses/edit.jte", Collections.singletonMap("page", page)).status(422);
+            }
+
+        } catch (ValidationException e) {
+            throw new NotFoundResponse("Page not found");
         }
     }
 }
