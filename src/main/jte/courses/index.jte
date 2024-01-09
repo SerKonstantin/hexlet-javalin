@@ -6,6 +6,7 @@
     title = @`
         <title>PlayWithJTE | Courses</title>
     `,
+
     content = @`
     <div class="w-50 mb-3">
         <form class="input-group" action="${NamedRoutes.coursesPath()}" method="get">
@@ -17,7 +18,7 @@
     </div>
 
     @if (page.getCourses().isEmpty())
-        <p>Courses not found</p>
+        <h3>Courses not found</h3>
     @else
         <h3>Courses</h3>
         <div class="list-group w-50">
@@ -29,56 +30,59 @@
         </div>
     @endif
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${page.getPage() < 2 ? 1 : page.getPage() - 1}">Previous</a>
-            </li>
+    @if(page.getPagesCount() != 0)
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${page.getPage() < 2 ? 1 : page.getPage() - 1}">Previous</a>
+                </li>
 
-            @if(page.getPagesCount() <= 5)
-                @for(var i = 1; i <= page.getPagesCount(); i++)
-                    <li class="page-item @if(page.getPage() == i) active @endif">
-                        <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${i}">${i}</a>
-                    </li>
-                @endfor
-            @else
-                @if(page.getPage() > 2)
-                    <li class="page-item">
-                        <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=1">1</a>
-                    </li>
-                    @if(page.getPage() > 3)
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#">...</a>
-                        </li>
-                    @endif
-                @endif
-
-                @for(var i = page.getPage() - 2; i <= page.getPage() + 2; i++)
-                    @if(i > 0 && i <= page.getPagesCount())
+                @if(page.getPagesCount() <= 5)
+                    @for(var i = 1; i <= page.getPagesCount(); i++)
                         <li class="page-item @if(page.getPage() == i) active @endif">
                             <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${i}">${i}</a>
                         </li>
+                    @endfor
+                @else
+                    @if(page.getPage() > 2)
+                        <li class="page-item">
+                            <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=1">1</a>
+                        </li>
+                        @if(page.getPage() > 3)
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">...</a>
+                            </li>
+                        @endif
                     @endif
-                @endfor
 
-                @if(page.getPage() < page.getPagesCount() - 2)
-                    @if(page.getPage() < page.getPagesCount() - 3)
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#">...</a>
+                    @for(var i = page.getPage() - 2; i <= page.getPage() + 2; i++)
+                        @if(i > 0 && i <= page.getPagesCount())
+                            <li class="page-item @if(page.getPage() == i) active @endif">
+                                <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${i}">${i}</a>
+                            </li>
+                        @endif
+                    @endfor
+
+                    @if(page.getPage() < page.getPagesCount() - 2)
+                        @if(page.getPage() < page.getPagesCount() - 3)
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">...</a>
+                            </li>
+                        @endif
+                        <li class="page-item">
+                            <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${page.getPagesCount()}">${page.getPagesCount()}</a>
                         </li>
                     @endif
-                    <li class="page-item">
-                        <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${page.getPagesCount()}">${page.getPagesCount()}</a>
-                    </li>
                 @endif
-            @endif
 
-            <li class="page-item">
-                <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${page.getPage() >= page.getPagesCount() ? page.getPagesCount() : page.getPage() + 1}">Next</a>
-            </li>
-        </ul>
-    </nav>
+                <li class="page-item">
+                    <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${page.getPage() >= page.getPagesCount() ? page.getPagesCount() : page.getPage() + 1}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    @endif
     `,
+
     footer = @`
         <p>Courses footer</p>
         <p>Visit my <a href="${NamedRoutes.footerGithubPath()}">GitHub</a></p>
