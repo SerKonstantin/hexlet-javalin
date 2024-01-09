@@ -32,19 +32,19 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link"href="${NamedRoutes.coursesPath()}?page=${page.getPage() < 2 ? 1 : page.getPage() - 1}">Previous</a>
+                <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${page.getPage() < 2 ? 1 : page.getPage() - 1}">Previous</a>
             </li>
 
             @if(page.getPagesCount() <= 5)
                 @for(var i = 1; i <= page.getPagesCount(); i++)
                     <li class="page-item @if(page.getPage() == i) active @endif">
-                        <a class="page-link" href="${NamedRoutes.coursesPath()}?page=${i}">${i}</a>
+                        <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${i}">${i}</a>
                     </li>
                 @endfor
             @else
                 @if(page.getPage() > 2)
                     <li class="page-item">
-                        <a class="page-link" href="${NamedRoutes.coursesPath()}?page=1">1</a>
+                        <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=1">1</a>
                     </li>
                     @if(page.getPage() > 3)
                         <li class="page-item disabled">
@@ -56,7 +56,7 @@
                 @for(var i = page.getPage() - 2; i <= page.getPage() + 2; i++)
                     @if(i > 0 && i <= page.getPagesCount())
                         <li class="page-item @if(page.getPage() == i) active @endif">
-                            <a class="page-link" href="${NamedRoutes.coursesPath()}?page=${i}">${i}</a>
+                            <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${i}">${i}</a>
                         </li>
                     @endif
                 @endfor
@@ -68,13 +68,13 @@
                         </li>
                     @endif
                     <li class="page-item">
-                        <a class="page-link" href="${NamedRoutes.coursesPath()}?page=${page.getPagesCount()}">${page.getPagesCount()}</a>
+                        <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${page.getPagesCount()}">${page.getPagesCount()}</a>
                     </li>
                 @endif
             @endif
 
             <li class="page-item">
-                <a class="page-link" href="${NamedRoutes.coursesPath()}?page=${page.getPage() >= page.getPagesCount() ? page.getPagesCount() : page.getPage() + 1}">Next</a>
+                <a class="page-link" href="${NamedRoutes.coursesPath()}?term=${page.getTerm()}&page=${page.getPage() >= page.getPagesCount() ? page.getPagesCount() : page.getPage() + 1}">Next</a>
             </li>
         </ul>
     </nav>
