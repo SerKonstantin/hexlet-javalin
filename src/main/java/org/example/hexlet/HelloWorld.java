@@ -2,6 +2,7 @@ package org.example.hexlet;
 
 import io.javalin.Javalin;
 import org.example.hexlet.controller.CoursesController;
+import org.example.hexlet.controller.SessionController;
 import org.example.hexlet.controller.UsersController;
 import org.example.hexlet.dto.MainPage;
 import org.example.hexlet.pseudoDatabases.courses.CoursesRepository;
@@ -19,8 +20,9 @@ public class HelloWorld {
         UsersRepository.populate(64);
 
         app.get(NamedRoutes.homepagePath(), ctx -> {
-            var visited = Boolean.valueOf(ctx.cookie("visited"));
-            var page = new MainPage(visited);
+            var visited = Boolean.parseBoolean(ctx.cookie("visited"));
+            String currentUser = ctx.sessionAttribute("currentUser");
+            var page = new MainPage(visited, currentUser);
             ctx.render("index.jte", Collections.singletonMap("page", page));
             ctx.cookie("visited", String.valueOf(true));
         });
@@ -36,6 +38,10 @@ public class HelloWorld {
         app.get(NamedRoutes.buildUsersPath(), UsersController::build);
         app.get(NamedRoutes.userPath("{id}"), UsersController::show);
         app.post(NamedRoutes.usersPath(), UsersController::create);
+
+        app.get(NamedRoutes.buildSessionsPath(), SessionController::build);
+        app.post(NamedRoutes.sessionsPath(), SessionController::create);
+        app.delete(NamedRoutes.sessionsPath(), SessionController::destroy);
 
         return app;
     }

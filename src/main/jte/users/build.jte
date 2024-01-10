@@ -49,7 +49,7 @@
                     <input type="password" class="form-control rounded" required name="passwordConfirmation">
                 </label>
             </div>
-            <input type="submit" class="btn btn-outline-primary m-2" value="Register">
+            <input type="submit" class="btn btn-outline-primary m-2" value="Add user">
         </form>
     </div>
     `
