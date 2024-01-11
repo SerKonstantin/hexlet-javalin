@@ -1,4 +1,4 @@
-package org.example.hexlet.dto.users;
+package org.example.hexlet.dto.sessions;
 
 import io.javalin.validation.ValidationError;
 import lombok.AllArgsConstructor;
@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
-public class BuildUserPage {
+@NoArgsConstructor
+public class RegisterPage {
+    private String nickname;
     private String firstName;
     private String secondName;
     private String email;

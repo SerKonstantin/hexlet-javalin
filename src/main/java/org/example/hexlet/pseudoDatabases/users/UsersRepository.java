@@ -43,6 +43,12 @@ public class UsersRepository {
                 .findFirst();
     }
 
+    public static Optional<User> findByNickname(String nickname) {
+        return users.stream()
+                .filter(user -> user.getNickname().toLowerCase().equals(nickname.toLowerCase()))
+                .findFirst();
+    }
+
     public static List<User> getUsers() {
         return users;
     }

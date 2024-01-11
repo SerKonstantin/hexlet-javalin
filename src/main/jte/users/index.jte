@@ -7,7 +7,6 @@
         <title>PlayWithJTE | Users</title>
     `,
     content = @`
-            <a href="${NamedRoutes.buildUsersPath()}" class="btn btn-outline-primary mb-3">Create user</a>
         @if (page.getUsers().isEmpty())
             <p>Users not found</p>
         @else

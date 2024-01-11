@@ -10,12 +10,22 @@
     content = @`
     <h1>Welcome to PlayWithJTE site</h1>
 
-    <div class="m-5">
+    <div class="mt-5 mb-5">
         @if(page.getCurrentUserName() != null)
-            <p>Greetings, ${page.getCurrentUserName()}.</p>
-            <p>Remove cookies to log out.</p>
+            <p>Greetings, you are now logged as <b>${page.getCurrentUserName()}</b>.</p>
+
+            <form action="${NamedRoutes.logoutPath()}" method="post">
+                <input class="btn btn-outline-primary" type="submit" value="Log out">
+            </form>
         @else
-            <p><a href="${NamedRoutes.buildSessionsPath()}">Register</a> to test javalin session.</p>
+            <p>Greetings, you are now logged as <b>Guest</b>.</p>
+            <p>Register to test sessions. Or log in with username 'admin' and password 'admin'.</p>
+            <button type="button" class="btn btn-outline-primary" onclick="window.location.href='${NamedRoutes.registerPath()}'">
+                Register
+            </button>
+            <button type="button" class="btn btn-outline-primary" onclick="window.location.href='${NamedRoutes.loginPath()}'">
+                Log in
+            </button>
         @endif
     </div>
 

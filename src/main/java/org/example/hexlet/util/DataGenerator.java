@@ -31,11 +31,12 @@ public class DataGenerator {
         Faker faker = new Faker(new Locale("en"), RANDOM);
 
         for (var i = 0; i < count; i++) {
+            var nickname = faker.internet().username();
             var firstName = faker.name().firstName();
             var lastName = faker.name().lastName();
             var email = faker.internet().emailAddress();
             var password = faker.internet().password(6, 8);
-            var user = new User(firstName, lastName, email, password);
+            var user = new User(nickname, firstName, lastName, email, password);
             users.add(user);
         }
 

@@ -1,7 +1,7 @@
 package org.example.hexlet.util;
 
 public class NamedRoutes {
-    public static String homepagePath() { return "/"; }
+    public static String rootPath() { return "/"; }
 
     // Courses
     public static String coursesPath() {
@@ -40,9 +40,10 @@ public class NamedRoutes {
     public static String footerGithubPath() { return "https://github.com/SerKonstantin"; }
 
     // Sessions
-    public static String sessionsPath() { return "/sessions"; }
+    public static String registerPath() { return "/register"; }
 
-    public static String buildSessionsPath() { return "/sessions/build"; }
+    public static String loginPath() { return "/login"; }
 
+    public static String logoutPath() { return "/logout"; }
 
 }

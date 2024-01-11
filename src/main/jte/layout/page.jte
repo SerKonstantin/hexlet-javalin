@@ -17,7 +17,7 @@
     <header>
         <ul class="nav nav-pills border-bottom mb-4">
             <li class="nav-item">
-                <a class="nav-link" href="${NamedRoutes.homepagePath()}" >Home</a>
+                <a class="nav-link" href="${NamedRoutes.rootPath()}" >Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${NamedRoutes.usersPath()}">Users</a>

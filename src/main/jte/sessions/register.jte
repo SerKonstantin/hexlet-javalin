@@ -1,12 +1,12 @@
-@import org.example.hexlet.dto.users.BuildUserPage
+@import org.example.hexlet.dto.sessions.RegisterPage
 @import org.example.hexlet.util.NamedRoutes
-@param BuildUserPage page
+@param RegisterPage page
 
 @template.layout.page(
-    title = @`
+title = @`
     <title>PlayWithJTE | New user</title>
-    `,
-    content = @`
+`,
+content = @`
     @if(page.getErrors() != null)
         <ul class="list-unstyled">
             @for(var validator : page.getErrors().values())
@@ -16,9 +16,15 @@
             @endfor
         </ul>
     @endif
-    
+
     <div class="d-flex justify-content-center">
-        <form action="${NamedRoutes.usersPath()}" method="post">
+        <form action="${NamedRoutes.registerPath()}" method="post">
+            <div>
+                <label class="form-group m-2">
+                    Nickname
+                    <input type="text" class="form-control rounded" required name="nickname" value="${page.getNickname()}">
+                </label>
+            </div>
             <div>
                 <label class="form-group m-2">
                     First name
@@ -49,10 +55,10 @@
                     <input type="password" class="form-control rounded" required name="passwordConfirmation">
                 </label>
             </div>
-            <input type="submit" class="btn btn-outline-primary m-2" value="Add user">
+            <input type="submit" class="btn btn-outline-primary m-2" value="Register">
         </form>
     </div>
-    `
+`
 )
 
 <!-- No footer here just for test -->

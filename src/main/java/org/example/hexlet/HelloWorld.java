@@ -16,12 +16,12 @@ public class HelloWorld {
         var app = Javalin.create(config -> config.plugins.enableDevLogging());
 
         // Imitate existing DB
-        CoursesRepository.populate(64);
-        UsersRepository.populate(64);
+        CoursesRepository.populate(128);
+        UsersRepository.populate(16);
 
-        app.get(NamedRoutes.homepagePath(), ctx -> {
+        app.get(NamedRoutes.rootPath(), ctx -> {
             var visited = Boolean.parseBoolean(ctx.cookie("visited"));
-            String currentUser = ctx.sessionAttribute("currentUser");
+            String currentUser = ctx.sessionAttribute("username");
             var page = new MainPage(visited, currentUser);
             ctx.render("index.jte", Collections.singletonMap("page", page));
             ctx.cookie("visited", String.valueOf(true));
@@ -35,13 +35,13 @@ public class HelloWorld {
         app.post(NamedRoutes.coursePath("{id}"), CoursesController::update);
 
         app.get(NamedRoutes.usersPath(), UsersController::index);
-        app.get(NamedRoutes.buildUsersPath(), UsersController::build);
         app.get(NamedRoutes.userPath("{id}"), UsersController::show);
-        app.post(NamedRoutes.usersPath(), UsersController::create);
 
-        app.get(NamedRoutes.buildSessionsPath(), SessionController::build);
-        app.post(NamedRoutes.sessionsPath(), SessionController::create);
-        app.delete(NamedRoutes.sessionsPath(), SessionController::destroy);
+        app.get(NamedRoutes.registerPath(), SessionController::renderRegisterForm);
+        app.post(NamedRoutes.registerPath(), SessionController::handleRegister);
+        app.get(NamedRoutes.loginPath(), SessionController::renderLoginForm);
+        app.post(NamedRoutes.loginPath(), SessionController::handleLogin);
+        app.post(NamedRoutes.logoutPath(), SessionController::handleLogout);
 
         return app;
     }
