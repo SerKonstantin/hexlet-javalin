@@ -32,8 +32,8 @@
 
     <main>
         @if(page != null && page.getFlash() != null)
-            <div>
-                <p class="alert alert-success" role="alert">${page.getFlash()}</p>
+            <div class="alert alert-${page.getFlashType()}" role="alert">
+                ${page.getFlash()}
             </div>
         @endif
 

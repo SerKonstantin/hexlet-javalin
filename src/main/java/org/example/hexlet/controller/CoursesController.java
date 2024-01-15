@@ -39,6 +39,7 @@ public class CoursesController {
         // Add flash message
         var page = new CoursesPage(paginatedCourses, term, pagesCount, currentPage);
         page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
 
         ctx.render("courses/index.jte", Collections.singletonMap("page", page));
     }
@@ -72,6 +73,7 @@ public class CoursesController {
             var course = new Course(name, description);
             CoursesRepository.save(course);
             ctx.sessionAttribute("flash", "Course has been created!");
+            ctx.sessionAttribute("flash-type", "success");
             ctx.redirect(NamedRoutes.coursesPath());
 
         } catch (ValidationException e) {
