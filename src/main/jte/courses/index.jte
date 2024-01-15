@@ -3,6 +3,8 @@
 @param CoursesPage page
 
 @template.layout.page(
+    page = page,
+
     title = @`
         <title>PlayWithJTE | Courses</title>
     `,

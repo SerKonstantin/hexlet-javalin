@@ -36,7 +36,10 @@ public class CoursesController {
         var endIndex = Math.min(startIndex + perPage, courses.size());
         var paginatedCourses = courses.subList(startIndex, endIndex);
 
+        // Add flash message
         var page = new CoursesPage(paginatedCourses, term, pagesCount, currentPage);
+        page.setFlash(ctx.consumeSessionAttribute("flash"));
+
         ctx.render("courses/index.jte", Collections.singletonMap("page", page));
     }
 
@@ -68,7 +71,9 @@ public class CoursesController {
                     .get();
             var course = new Course(name, description);
             CoursesRepository.save(course);
+            ctx.sessionAttribute("flash", "Course has been created!");
             ctx.redirect(NamedRoutes.coursesPath());
+
         } catch (ValidationException e) {
             var description = ctx.formParam("description");
             var page = new BuildCoursePage(name, description, e.getErrors());
