@@ -11,13 +11,14 @@ import org.example.hexlet.model.Course;
 import org.example.hexlet.pseudoDatabases.courses.CoursesRepository;
 import org.example.hexlet.util.NamedRoutes;
 
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
 import static org.example.hexlet.pseudoDatabases.courses.CoursesRepository.findById;
 
 public class CoursesController {
-    public static void index(Context ctx) {
+    public static void index(Context ctx) throws SQLException {
         // Search functionality
         var term = ctx.queryParam("term");
         List<Course> courses;
@@ -49,7 +50,7 @@ public class CoursesController {
         ctx.render("courses/build.jte", Collections.singletonMap("page", page));
     }
 
-    public static void show(Context ctx) {
+    public static void show(Context ctx)  throws SQLException {
         try {
             var id = ctx.pathParamAsClass("id", Long.class).get();
 
@@ -63,7 +64,7 @@ public class CoursesController {
         }
     }
 
-    public static void create(Context ctx) {
+    public static void create(Context ctx) throws SQLException {
         var name = ctx.formParam("name").trim();
 
         try {
@@ -83,7 +84,7 @@ public class CoursesController {
         }
     }
 
-    public static void edit(Context ctx) {
+    public static void edit(Context ctx) throws SQLException {
         try {
             var id = ctx.pathParamAsClass("id", Long.class).get();
             var course = CoursesRepository.findById(id)
@@ -91,6 +92,7 @@ public class CoursesController {
 
             var name = course.getName();
             var description = course.getDescription();
+
             var page = new EditCoursePage(id, name, description, null);
             ctx.render("courses/edit.jte", Collections.singletonMap("page", page));
         } catch (ValidationException e) {
@@ -98,7 +100,7 @@ public class CoursesController {
         }
     }
 
-    public static void update(Context ctx) {
+    public static void update(Context ctx) throws SQLException {
         try {
             var id = ctx.pathParamAsClass("id", Long.class).get();
             var course = CoursesRepository.findById(id)
@@ -113,7 +115,7 @@ public class CoursesController {
 
                 course.setName(name);
                 course.setDescription(description);
-
+                CoursesRepository.update(course);
                 ctx.redirect(NamedRoutes.coursesPath());
 
             } catch (ValidationException e) {

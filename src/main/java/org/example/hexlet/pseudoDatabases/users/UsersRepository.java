@@ -1,6 +1,7 @@
 package org.example.hexlet.pseudoDatabases.users;
 
 import org.example.hexlet.model.User;
+import org.example.hexlet.pseudoDatabases.BaseRepository;
 import org.example.hexlet.util.DataGenerator;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 // Imitate DB for instances of User class
-public class UsersRepository {
+public class UsersRepository extends BaseRepository {
     private static List<User> users = new ArrayList<>();
 
     // Private constructor to prevent init outside the class
