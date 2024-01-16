@@ -12,8 +12,12 @@ import org.example.hexlet.databases.courses.CoursesRepository;
 import org.example.hexlet.databases.users.UsersRepository;
 import org.example.hexlet.util.NamedRoutes;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -26,10 +30,14 @@ public class HelloWorld {
         hikariConfig.setJdbcUrl("jdbc:h2:mem:play_with_javalin;DB_CLOSE_DELAY=-1;");
 
         var dataSource = new HikariDataSource(hikariConfig);
-        var url = HelloWorld.class.getClassLoader().getResource("schema.sql");
-        var file = new File(url.getFile());
-        var sql = Files.lines(file.toPath())
-                .collect(Collectors.joining("\n"));
+        var inputStream = HelloWorld.class.getClassLoader().getResourceAsStream("schema.sql");
+        var reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        var sql = reader.lines().collect(Collectors.joining("\n"));
+
+//        var url = HelloWorld.class.getClassLoader().getResource("schema.sql");
+//        var file = new File(url.getFile());
+//        var sql = Files.lines(file.toPath())
+//                .collect(Collectors.joining("\n"));
 
         try (var connection = dataSource.getConnection(); var statement = connection.createStatement()) {
             statement.execute(sql);
