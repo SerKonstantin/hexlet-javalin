@@ -77,8 +77,13 @@ public class HelloWorld {
         return app;
     }
 
+    public static int getPort() {
+        String port = System.getenv().getOrDefault("PORT", "7070");
+        return Integer.parseInt(port);
+    }
+
     public static void main(String[] args) throws SQLException, IOException {
         var app = getApp();
-        app.start(7070);
+        app.start(getPort());
     }
 }
