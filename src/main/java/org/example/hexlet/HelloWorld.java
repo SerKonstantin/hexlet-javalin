@@ -7,9 +7,9 @@ import org.example.hexlet.controller.CoursesController;
 import org.example.hexlet.controller.SessionController;
 import org.example.hexlet.controller.UsersController;
 import org.example.hexlet.dto.MainPage;
-import org.example.hexlet.pseudoDatabases.BaseRepository;
-import org.example.hexlet.pseudoDatabases.courses.CoursesRepository;
-import org.example.hexlet.pseudoDatabases.users.UsersRepository;
+import org.example.hexlet.databases.BaseRepository;
+import org.example.hexlet.databases.courses.CoursesRepository;
+import org.example.hexlet.databases.users.UsersRepository;
 import org.example.hexlet.util.NamedRoutes;
 
 import java.io.File;

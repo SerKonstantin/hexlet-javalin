@@ -23,7 +23,7 @@
                     <tr>
                         <td>${user.getId()}</td>
                         <td>
-                            <a href="${NamedRoutes.userPath(user.getId())}">${user.getFirstName()} ${user.getSecondName()}</a>
+                            <a href="${NamedRoutes.userPath(user.getId())}">${user.getFirstName()} ${user.getLastName()}</a>
                         </td>
                         <td>${user.getEmail()}</td>
                     </tr>

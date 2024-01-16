@@ -5,7 +5,7 @@ import io.javalin.http.NotFoundResponse;
 import io.javalin.validation.ValidationException;
 import org.example.hexlet.dto.users.UserPage;
 import org.example.hexlet.dto.users.UsersPage;
-import org.example.hexlet.pseudoDatabases.users.UsersRepository;
+import org.example.hexlet.databases.users.UsersRepository;
 
 import java.util.Collections;
 

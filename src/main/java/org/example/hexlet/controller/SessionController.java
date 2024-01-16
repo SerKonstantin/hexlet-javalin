@@ -5,7 +5,7 @@ import io.javalin.validation.ValidationException;
 import org.example.hexlet.dto.sessions.LoginPage;
 import org.example.hexlet.dto.sessions.RegisterPage;
 import org.example.hexlet.model.User;
-import org.example.hexlet.pseudoDatabases.users.UsersRepository;
+import org.example.hexlet.databases.users.UsersRepository;
 import org.example.hexlet.util.NamedRoutes;
 import org.example.hexlet.util.Security;
 
@@ -19,7 +19,7 @@ public class SessionController {
 
     public static void handleRegister(Context ctx) {
         var firstName = ctx.formParam("firstName").trim();
-        var secondName = ctx.formParam("secondName").trim();
+        var lastName = ctx.formParam("lastName").trim();
         var email = ctx.formParam("email").trim().toLowerCase();
 
         try {
@@ -36,14 +36,14 @@ public class SessionController {
                     .get();
 
             var encryptedPassword = Security.encrypt(password);
-            var user = new User(nickname, firstName, secondName, email, encryptedPassword);
+            var user = new User(nickname, firstName, lastName, email, encryptedPassword);
             UsersRepository.save(user);
             ctx.sessionAttribute("username", nickname);
             ctx.redirect(NamedRoutes.rootPath());
 
         } catch (ValidationException e) {
             var nickname = ctx.formParam("nickname");
-            var page = new RegisterPage(nickname, firstName, secondName, email, e.getErrors());
+            var page = new RegisterPage(nickname, firstName, lastName, email, e.getErrors());
             ctx.render("sessions/register.jte", Collections.singletonMap("page", page)).status(422);
         }
     }

@@ -8,14 +8,14 @@ import org.example.hexlet.dto.courses.CoursePage;
 import org.example.hexlet.dto.courses.CoursesPage;
 import org.example.hexlet.dto.courses.EditCoursePage;
 import org.example.hexlet.model.Course;
-import org.example.hexlet.pseudoDatabases.courses.CoursesRepository;
+import org.example.hexlet.databases.courses.CoursesRepository;
 import org.example.hexlet.util.NamedRoutes;
 
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-import static org.example.hexlet.pseudoDatabases.courses.CoursesRepository.findById;
+import static org.example.hexlet.databases.courses.CoursesRepository.findById;
 
 public class CoursesController {
     public static void index(Context ctx) throws SQLException {

@@ -4,10 +4,10 @@
 
 @template.layout.page(
     title = @`
-        <title>PlayWithJTE | ${page.getUser().getFirstName()} ${page.getUser().getSecondName()}</title>
+        <title>PlayWithJTE | ${page.getUser().getFirstName()} ${page.getUser().getLastName()}</title>
     `,
     content =@`
-        <h2>${page.getUser().getFirstName()} ${page.getUser().getSecondName()}</h2>
+        <h2>${page.getUser().getFirstName()} ${page.getUser().getLastName()}</h2>
         <p>Email: ${page.getUser().getEmail()}</p>
     `,
         footer = @`

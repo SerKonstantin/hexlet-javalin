@@ -1,7 +1,7 @@
-package org.example.hexlet.pseudoDatabases.courses;
+package org.example.hexlet.databases.courses;
 
 import org.example.hexlet.model.Course;
-import org.example.hexlet.pseudoDatabases.BaseRepository;
+import org.example.hexlet.databases.BaseRepository;
 import org.example.hexlet.util.DataGenerator;
 
 import java.sql.SQLException;
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CoursesRepository extends BaseRepository {
+
     // Utility method to prefill DB
     public static void populate(int count) throws SQLException {
         var courses = DataGenerator.getCourses(count);

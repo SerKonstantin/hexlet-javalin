@@ -33,8 +33,8 @@ content = @`
             </div>
             <div>
                 <label class="form-group m-2">
-                    Second name
-                    <input type="text" class="form-control rounded" required name="secondName" value="${page.getSecondName()}">
+                    Last name
+                    <input type="text" class="form-control rounded" required name="lastName" value="${page.getSecondName()}">
                 </label>
             </div>
             <div>

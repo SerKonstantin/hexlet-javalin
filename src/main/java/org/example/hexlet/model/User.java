@@ -13,14 +13,14 @@ public final class User {
     @ToString.Include
     private String nickname;
     private String firstName;
-    private String secondName;
+    private String lastName;
     private String email;
     private String password;
 
-    public User(String nickname, String firstName, String secondName, String email, String password) {
+    public User(String nickname, String firstName, String lastName, String email, String password) {
         this.nickname = nickname;
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }

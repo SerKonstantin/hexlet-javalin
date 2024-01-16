@@ -1,7 +1,7 @@
-package org.example.hexlet.pseudoDatabases.users;
+package org.example.hexlet.databases.users;
 
 import org.example.hexlet.model.User;
-import org.example.hexlet.pseudoDatabases.BaseRepository;
+import org.example.hexlet.databases.BaseRepository;
 import org.example.hexlet.util.DataGenerator;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class UsersRepository extends BaseRepository {
     public static List<User> search(String term) {
         return users.stream()
                 .filter(u -> (u.getFirstName().toLowerCase().startsWith(term.toLowerCase()) ||
-                        u.getSecondName().toLowerCase().startsWith(term.toLowerCase())))
+                        u.getLastName().toLowerCase().startsWith(term.toLowerCase())))
                 .collect(Collectors.toList());
     }
 
