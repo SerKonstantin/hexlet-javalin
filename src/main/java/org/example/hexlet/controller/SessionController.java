@@ -9,6 +9,7 @@ import org.example.hexlet.databases.users.UsersRepository;
 import org.example.hexlet.util.NamedRoutes;
 import org.example.hexlet.util.Security;
 
+import java.sql.SQLException;
 import java.util.Collections;
 
 public class SessionController {
@@ -17,7 +18,7 @@ public class SessionController {
         ctx.render("sessions/register.jte", Collections.singletonMap("page", page));
     }
 
-    public static void handleRegister(Context ctx) {
+    public static void handleRegister(Context ctx) throws SQLException {
         var firstName = ctx.formParam("firstName").trim();
         var lastName = ctx.formParam("lastName").trim();
         var email = ctx.formParam("email").trim().toLowerCase();
@@ -25,7 +26,14 @@ public class SessionController {
         try {
             var nickname = ctx.formParamAsClass("nickname", String.class)
                     .check(value -> value.trim().length() >= 3, "Nickname should be at least 3 characters long")
-                    .check(value -> UsersRepository.findByNickname(value).isEmpty(), "Nickname is already in use")
+                    .check(value -> {
+                        // Done badly, for example might happen if disconnected from DB
+                        try {
+                            return UsersRepository.findByNickname(value).isEmpty();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }, "Nickname is already in use")
                     .check(value -> !value.equals("admin"), "Invalid nickname")
                     .get().trim();
 
@@ -53,7 +61,7 @@ public class SessionController {
         ctx.render("sessions/login.jte", Collections.singletonMap("page", page));
     }
 
-    public static void handleLogin(Context ctx) {
+    public static void handleLogin(Context ctx) throws SQLException {
         var nickname = ctx.formParam("nickname");
         var password = Security.encrypt(ctx.formParam("password"));
 

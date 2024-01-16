@@ -7,16 +7,17 @@ import org.example.hexlet.dto.users.UserPage;
 import org.example.hexlet.dto.users.UsersPage;
 import org.example.hexlet.databases.users.UsersRepository;
 
+import java.sql.SQLException;
 import java.util.Collections;
 
 public class UsersController {
-    public static void index(Context ctx) {
+    public static void index(Context ctx) throws SQLException {
         var users = UsersRepository.getUsers();
         var page = new UsersPage(users);
         ctx.render("users/index.jte", Collections.singletonMap("page", page));
     }
 
-    public static void show(Context ctx) {
+    public static void show(Context ctx) throws SQLException {
         try {
             var id = ctx.pathParamAsClass("id", Long.class).get();
 
